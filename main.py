@@ -49,8 +49,12 @@ async def parse_teachers(text: ClientResponse) -> list[Teacher]:
     return teachers
 
 
+async def get_all_tvgu_teachers() -> list[Teacher]:
+    return await parse_teachers(await get_teachers_page())
+
+
 async def main(args: Args) -> None:
-    teachers: list[Teacher] = await parse_teachers(await get_teachers_page())
+    teachers: list[Teacher] = await get_all_tvgu_teachers()
 
     if args.output is not None or args.output_auto is not None:
         if args.output_auto is not None:
