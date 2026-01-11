@@ -64,14 +64,14 @@ pip install aiohttp beautifulsoup4
 ## В виде CLI-утилиты
 
 ```bash
-python __main__.py
+python -m tvgu_teachers_parser
 ```
 В этом режиме данные загружаются, но никуда не сохраняются: бесполезно
 
 ## Экспорт преподавателей в файл
 
 ```bash
-python __main__.py --output teachers.json --prettify
+python -m tvgu_teachers_parser --output teachers.json --prettify
 ```
 `--output schedules.json` – Файл для экспорта в JSON формате
 
@@ -81,13 +81,13 @@ python __main__.py --output teachers.json --prettify
 
 ## Автоматическое имя файла
 ```bash
-python __main__.py --output-auto --output-directory data
+python -m tvgu_teachers_parser --output-auto --output-directory data
 ```
 
 В этом случае название файла будет иметь такой вид: `teachers-YYYY-MM-DD.json` и находиться он будет в папке `data`
 
 ## Используя функцию
-В `main.py` есть функция `get_all_tvgu_teachers` – просто вызывайте её _(не забудьте `await`)_ и получите список преподавателей
+Используйте функцию `get_all_tvgu_teachers()` – просто вызывайте её _(не забудьте `await`)_ и получите список преподавателей
 
 Формат возвращаемого значения: `dict[str, dict[Group, tuple[Lesson]]]` – Словарь с ключом в виде кода факультета, затем значение со словарём с ключом в виде группы и значением в виде списка пар
 
