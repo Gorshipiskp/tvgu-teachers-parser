@@ -64,14 +64,14 @@ pip install aiohttp beautifulsoup4
 ## В виде CLI-утилиты
 
 ```bash
-python main.py
+python __main__.py
 ```
 В этом режиме данные загружаются, но никуда не сохраняются: бесполезно
 
 ## Экспорт преподавателей в файл
 
 ```bash
-python main.py --output teachers.json --prettify
+python __main__.py --output teachers.json --prettify
 ```
 `--output schedules.json` – Файл для экспорта в JSON формате
 
@@ -81,7 +81,7 @@ python main.py --output teachers.json --prettify
 
 ## Автоматическое имя файла
 ```bash
-python main.py --output-auto --output-directory data
+python __main__.py --output-auto --output-directory data
 ```
 
 В этом случае название файла будет иметь такой вид: `teachers-YYYY-MM-DD.json` и находиться он будет в папке `data`
