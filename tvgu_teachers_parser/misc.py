@@ -13,6 +13,7 @@ class Teacher:
     name: str
     surname: str
     patronymic: str
+    initials: str
     current_job: str
     teaching_disciplines: list[str]
     level_education: str
@@ -91,6 +92,9 @@ def parse_teacher_record(teacher_record: bs4.element.Tag) -> Teacher:
 
     name_parts: dict[str, str] = dict(zip(TEACHER_NAME_PARTS, [part.capitalize() for part in parts]))
 
+    #  В формате "Фамилия И.О."
+    initials: str = f"{name_parts['surname']} {name_parts['name'][0]}.{name_parts['patronymic'][0]}.".strip()
+
     current_job_tag: bs4.element.Tag = teacher_record.find(itemprop="post")
     current_job: str = handle_possible_modal(current_job_tag, ",", ";")[0]
 
@@ -150,6 +154,7 @@ def parse_teacher_record(teacher_record: bs4.element.Tag) -> Teacher:
         name=name_parts["name"],
         surname=name_parts["surname"],
         patronymic=name_parts["patronymic"],
+        initials=initials,
         current_job=current_job,
         teaching_disciplines=teaching_disciplines,
         level_education=level_education,
