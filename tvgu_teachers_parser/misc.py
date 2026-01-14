@@ -29,6 +29,27 @@ class Teacher:
     email: str
     teaching_programs: list[str]
 
+    def _identify(self) -> tuple[set, str, str, str, str, int, str, str, str]:
+        return (
+            self.name,
+            self.surname,
+            self.patronymic,
+            self.phone,
+            self.phone_additional_code,
+            self.experience_age,
+            self.level_education,
+            self.direction_education,
+            self.email
+        )
+
+    def __hash__(self) -> int:
+        return hash(self._identify())
+
+    def __eq__(self, other) -> bool:
+        if isinstance(other, Teacher):
+            return self._identify() == other._identify()
+        return NotImplemented
+
 
 def truly_capitalize(text: str) -> str:
     if not text:
