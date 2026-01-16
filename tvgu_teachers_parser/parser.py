@@ -20,6 +20,10 @@ def parse_teachers(text: ClientResponse) -> list[Teacher]:
         parse_teacher_record(teacher_record) for teacher_record in soup.find_all(itemprop="teachingStaff")
     ]
 
+    for teacher in teachers:
+        if teacher.lms_profile_link is not None:
+            print(teacher.lms_profile_link)
+
     return teachers
 
 
