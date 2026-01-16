@@ -103,7 +103,7 @@ def handle_possible_modal(tag: Tag, *splitters: str, additional_func: callable =
                                                       additional_func=additional_func)
             else:
                 contents = split_n_strip_n_capitalize(p.text, *splitters, additional_func=additional_func)
-    return [content.strip().replace("\" ", "\"") for content in contents]
+    return contents
 
 
 #  Код плотный, но иначе будет слишком много бессмысленных переменных
