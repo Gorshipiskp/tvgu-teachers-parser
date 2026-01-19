@@ -8,7 +8,7 @@ from bs4 import Tag
 from .config import NON_DIGITS_PATTERN, DIGITS_PATTERN, TEACHER_FULLNAME_PATTERN, TEACHER_NAME_PARTS
 
 
-@dataclass(frozen=True, kw_only=True, slots=True)
+@dataclass(frozen=True, kw_only=True)
 class Teacher:
     name: str
     surname: str

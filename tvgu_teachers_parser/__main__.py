@@ -10,7 +10,7 @@ from .misc import Teacher, CustomEncoder
 from .parser import get_all_tvgu_teachers
 
 
-@dataclass(frozen=True, kw_only=True, slots=True)
+@dataclass(frozen=True, kw_only=True)
 class Args:
     prettify: bool
     output: Optional[str]
