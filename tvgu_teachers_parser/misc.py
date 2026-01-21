@@ -166,7 +166,7 @@ def parse_teacher_record(teacher_record: Tag) -> Teacher:
     phones: list[str] = handle_possible_modal(phone_tag, ",", ";")
     phone: str = phones[0] if phones else None
     phone_with_add_code: Optional[list[str]] = [
-        re.sub(NON_DIGITS_PATTERN, "", phone_part) for phone_part in re.split(r"(доб)|(доп)", phone)
+        re.sub(NON_DIGITS_PATTERN, "", phone_part) for phone_part in re.split(r"(?:доб)|(?:доп)", phone)
     ] if phone else None
     phone: Optional[str] = phone_with_add_code[0] if phone_with_add_code else None
     phone_additional_code: Optional[str] = phone_with_add_code[1] if phone and len(phone_with_add_code) > 1 else None
