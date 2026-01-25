@@ -25,8 +25,8 @@ class Teacher:
     rewards: list[str]
     qualify_ups: list[str]
     experience_age: int
-    phone: str
-    phone_additional_code: str
+    phone: Optional[str]
+    phone_additional_code: Optional[str]
     email: str
     teaching_programs: list[str]
 
