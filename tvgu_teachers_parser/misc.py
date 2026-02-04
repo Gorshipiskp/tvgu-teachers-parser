@@ -117,7 +117,9 @@ def parse_teacher_record(teacher_record: Tag) -> Teacher:
 
     parts: list[str] = re.findall(TEACHER_FULLNAME_PATTERN, fullname)[0]
 
-    name_parts: dict[str, str] = dict(zip(TEACHER_NAME_PARTS, [part.capitalize() for part in parts]))
+    name_parts: dict[str, str] = dict(zip(
+        TEACHER_NAME_PARTS, [re.sub(r'-(\w)', lambda m: '-' + m.group(1).upper(), part.capitalize()) for part in parts]
+    ))
 
     #  В формате "Фамилия И.О."
     initials: str = f"{name_parts['surname']} {name_parts['name'][0]}.{name_parts['patronymic'][0]}.".strip()
