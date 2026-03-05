@@ -1,7 +1,7 @@
 import json
 import re
 from dataclasses import dataclass
-from typing import Optional
+from typing import Optional, Callable, TypeVar, Any
 
 from bs4 import Tag
 
@@ -30,7 +30,7 @@ class Teacher:
     email: str
     teaching_programs: list[str]
 
-    def _identify(self) -> tuple[set, str, str, str, str, int, str, str, str]:
+    def _identify(self) -> tuple[str, str, str, str | None, str | None, int, str, str, str]:
         return (
             self.name,
             self.surname,
@@ -58,12 +58,15 @@ def truly_capitalize(text: str) -> str:
     return text[0].upper() + text[1:]
 
 
-def flat(list_of_lists: list[list]) -> list:
+T = TypeVar("T")
+
+
+def flat(list_of_lists: list[list[T]]) -> list[T]:
     return [item for sublist in list_of_lists for item in sublist]
 
 
 def remove_whitespaces(text: str) -> str:
-    text = text.replace("\xa0", " ").strip()
+    text: str = text.replace("\xa0", " ").strip()
 
     while "  " in text:
         text = text.replace("  ", " ")
@@ -71,7 +74,8 @@ def remove_whitespaces(text: str) -> str:
     return text
 
 
-def split_n_strip_n_capitalize(text: str, *splitters: str, additional_func: callable = lambda x: x) -> list[str]:
+def split_n_strip_n_capitalize(text: str, *splitters: str,
+                               additional_func: Callable[..., str] = lambda x: x) -> list[str]:
     # Защищаем разделений от разграничителей внутри скобок
     if splitters:
         splitted = re.split(r"(?:%s)(?![^()]*\))" % "|".join(map(re.escape, splitters)), text)
@@ -85,7 +89,8 @@ def split_n_strip_n_capitalize(text: str, *splitters: str, additional_func: call
 
 
 #  Бывают кнопки "Показать", если текста много, так что вытягиваем из модалки инфу
-def handle_possible_modal(tag: Tag, *splitters: str, additional_func: callable = lambda x: x) -> list[str]:
+def handle_possible_modal(tag: Tag, *splitters: str,
+                          additional_func: Callable[..., str] = lambda x: x) -> list[str]:
     modal_container: Optional[Tag] = tag.find(class_="showpart-container-modal")
 
     if modal_container is None:
@@ -134,10 +139,10 @@ def parse_teacher_record(teacher_record: Tag) -> Teacher:
     educations_n_jobs: list[str] = split_n_strip_n_capitalize(
         teaching_level_tag.encode_contents().decode("UTF-8").replace("</br>", ""), "<br>"
     )
-    educations_n_jobs = flat(
+    educations_n_jobs = flat([
         split_n_strip_n_capitalize(education, ",", ";", ". ", additional_func=lambda x: x.replace("\"", "").strip("."))
         for education in educations_n_jobs
-    )
+    ])
 
     level_education: str = educations_n_jobs.pop(0)
     direction_education: str = educations_n_jobs.pop(0)
@@ -204,5 +209,5 @@ def parse_teacher_record(teacher_record: Tag) -> Teacher:
 
 
 class CustomEncoder(json.JSONEncoder):
-    def default(self, obj):
+    def default(self, obj) -> dict[str, Any]:
         return obj.__dict__

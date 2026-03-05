@@ -13,7 +13,7 @@ async def get_teachers_page() -> str:
         return await page.text()
 
 
-def parse_teachers(text: ClientResponse) -> list[Teacher]:
+def parse_teachers(text: str) -> list[Teacher]:
     soup: bs4.BeautifulSoup = bs4.BeautifulSoup(text, "html.parser")
 
     teachers: list[Teacher] = [
