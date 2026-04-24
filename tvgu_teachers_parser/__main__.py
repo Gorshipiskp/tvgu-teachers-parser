@@ -69,7 +69,7 @@ if __name__ == "__main__":
 
     cur_args: Args = parse_args()
 
-    if cur_args.output is not None and cur_args.output_auto is not None:
+    if cur_args.output and cur_args.output_auto:
         raise ValueError("Одновременно можно использовать параметр -o и -oa")
 
     asyncio.run(main(cur_args))
