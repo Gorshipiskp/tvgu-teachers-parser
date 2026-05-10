@@ -167,15 +167,15 @@ def parse_teacher_record(teacher_record: Tag) -> Teacher:
     # --- Повышение квалификации (индекс 8) ---
     qualify_ups = handle_possible_modal(cells[8], ",", ";")
 
-    # --- Стаж (индекс 9) ---
-    exp_age_str = handle_possible_modal(cells[9])[0]
+    # --- Стаж (индекс 10) ---
+    exp_age_str = handle_possible_modal(cells[10])[0]
     try:
         exp_age = int(re.findall(DIGITS_PATTERN, exp_age_str)[0])
     except IndexError:
         exp_age = 0
 
-    # --- Телефон (индекс 10) ---
-    phone_cell = cells[10]
+    # --- Телефон (индекс 11) ---
+    phone_cell = cells[11]
     phones = handle_possible_modal(phone_cell, ",", ";")
     phone = phones[0] if phones else None
     if phone:
@@ -188,12 +188,12 @@ def parse_teacher_record(teacher_record: Tag) -> Teacher:
     else:
         phone_additional_code = None
 
-    # --- Email (индекс 11) ---
-    emails = handle_possible_modal(cells[11], ",", ";")
+    # --- Email (индекс 12) ---
+    emails = handle_possible_modal(cells[12], ",", ";")
     email = emails[0] if emails else None
 
-    # --- Образовательные программы (индекс 12) ---
-    teaching_programs = handle_possible_modal(cells[12], ";")
+    # --- Образовательные программы (индекс 13) ---
+    teaching_programs = handle_possible_modal(cells[13], ";")
 
     return Teacher(
         name=name_parts["name"],
